@@ -1,0 +1,15 @@
+[theme]
+# A professional, soft pastel blue for buttons and accents
+primaryColor = "#7792E3"
+
+# A very light, clean pastel background
+backgroundColor = "#F4F7FB"
+
+# Slightly darker pastel for chat bubbles and input boxes
+secondaryBackgroundColor = "#E8EDF5"
+
+# Dark slate gray text (softer on the eyes than pure black)
+textColor = "#1E293B"
+
+# Modern, clean font
+font = "sans serif"

@@ -1,0 +1,54 @@
+This is a brilliant question. If you put a RAG system on your resume, an interviewer's #1 question will be: "How do you know your RAG system is actually good? How do you evaluate it?"
+
+To sound like a senior AI engineer, you should explain that RAG evaluation is broken into two separate parts: Retrieval Metrics (ChromaDB) and Generation Metrics (Gemini).
+
+Here are the 3 most important evaluation metrics (often calculated using frameworks like RAGAS or TruLens):
+
+1. Context Relevance (Evaluating ChromaDB)
+What it measures: Did the vector database pull the right paragraphs?
+Example: If a user asks "Where did Sania go to college?", the retrieved chunks must contain the name of your university. If ChromaDB returns chunks about your Python projects instead, your Context Relevance score will be very low. The LLM can't give a good answer if it is handed bad context.
+2. Faithfulness / Groundedness (Evaluating Gemini)
+What it measures: Did the AI hallucinate, or did it stick strictly to the provided facts?
+Example: If the retrieved chunk says "I have 2 years of experience with Python", but Gemini generates the answer "Sania has 5 years of Python experience", the answer is unfaithful. A high Faithfulness score means the AI is strictly loyal to the chunks we gave it.
+3. Answer Relevance (Evaluating the Final Output)
+What it measures: Did the final answer actually directly address the user's original question?
+Example: If the user asks "Do you know Python?", and the AI answers "Sania knows Java and C++," the answer might be factually true (faithful to the resume), but it is completely irrelevant to what the user actually asked.
+How to talk about this in an interview: "I built the RAG system to be modular so I could independently evaluate the retrieval and generation steps. My main focus was maximizing Faithfulness through strict prompt engineering—I instructed the model to explicitly say 'I don't know' if the retrieved chunks didn't contain the answer, which eliminated hallucinations."
+
+You now have a fantastic project and the theoretical knowledge to back it up in an interview. Congratulations on finishing! Is there anything else you'd like to tweak or learn about?
+
+
+#############################################
+To get actual mathematical scores (from 0.0 to 1.0) for Faithfulness, Context Relevance, and Answer Relevance, the industry uses a technique called "LLM-as-a-Judge".
+
+Here is exactly how it works using a popular open-source library called RAGAS (RAG Assessment):
+
+The "LLM-as-a-Judge" Concept
+Instead of humans grading the test, we hire a second, highly intelligent AI (like a massive Gemini-Pro or GPT-4 model) to act as a strict teacher and grade the homework of your RAG system.
+
+1. How it scores Faithfulness
+We write an automated script that sends the "Judge AI" two things:
+
+The raw context chunks we got from ChromaDB.
+The final answer your RAG system generated.
+We then prompt the Judge AI: "Read the final answer. Extract every single claim it makes. Check if every claim exists in the raw context. If a claim is not in the context, penalize the score."
+
+If your RAG makes 4 claims, and all 4 are in the context, your Faithfulness score is 1.0 (100%).
+If your RAG makes 4 claims, but 1 of them was hallucinated (made up), your score drops to 0.75 (75%).
+2. How it scores Context Relevance
+We send the Judge AI:
+
+The user's original question.
+The raw chunks ChromaDB retrieved.
+We prompt the Judge AI: "Read these chunks. How many of the sentences in these chunks are actually useful for answering the user's question?"
+
+If ChromaDB pulls exactly the right paragraph, the score is 1.0.
+If ChromaDB pulls 1 good paragraph but 3 completely irrelevant paragraphs about a different topic, the score drops to 0.25 (because the database is retrieving too much "noise").
+Do we need to build this right now?
+For a portfolio project, no! Evaluation pipelines are usually built by QA (Quality Assurance) or dedicated ML Ops teams.
+
+However, if an interviewer asks you, "How would you measure the performance of this system if we deployed it?"
+
+Your golden answer should be:
+
+"I would use an LLM-as-a-Judge framework like RAGAS. I would create a test dataset of 50 common questions a recruiter might ask. Then, I would run those questions through my pipeline and have an evaluator LLM automatically grade the outputs for Faithfulness and Context Relevance. If the Faithfulness score drops below 0.90, I know I need to make my prompt stricter."
