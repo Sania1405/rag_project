@@ -4,8 +4,83 @@ from rag_logic import ask_resume
 # --- PAGE SETUP ---
 st.set_page_config(page_title="Sania's AI Resume", page_icon="🤖", layout="centered")
 
-st.title("🤖 Chat with Sania's Resume")
-st.markdown("Welcome! I am an AI assistant trained exclusively on Sania's resume. Ask me anything about her skills, experience, or projects!")
+# --- CUSTOM CSS FOR PROFESSIONAL UI ---
+st.markdown("""
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+    
+    html, body, [class*="css"] {
+        font-family: 'Inter', sans-serif;
+    }
+    
+    /* Background styling */
+    .stApp {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    }
+
+    /* Profile Header Section with Glassmorphism */
+    .profile-container {
+        display: flex;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.65);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        padding: 2rem;
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(31, 38, 135, 0.07);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        margin-bottom: 2rem;
+        animation: fadeIn 0.8s ease-out;
+    }
+    
+    .profile-info h1 {
+        margin: 0;
+        font-size: 2.4rem;
+        color: #0f172a;
+        font-weight: 600;
+        letter-spacing: -0.5px;
+        line-height: 1.2;
+    }
+    
+    .profile-info p {
+        margin: 0.5rem 0 0 0;
+        font-size: 1.1rem;
+        color: #475569;
+        font-weight: 400;
+        line-height: 1.5;
+    }
+    
+    /* Input area styling */
+    .stChatInput {
+        border-radius: 15px !important;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.05) !important;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-15px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Responsive design for mobile */
+    @media (max-width: 768px) {
+        .profile-container {
+            flex-direction: column;
+            text-align: center;
+            padding: 1.5rem;
+        }
+        .profile-info h1 {
+            font-size: 1.8rem;
+        }
+    }
+</style>
+
+<div class="profile-container">
+    <div class="profile-info">
+        <h1>🤖 Chat with Sania's Resume</h1>
+        <p>Welcome! I am an AI assistant trained exclusively on Sania's resume. Ask me anything about her skills, experience, or projects!</p>
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
 # --- INITIALIZE CHAT MEMORY ---
 # Streamlit reruns the whole script every time a button is clicked.
